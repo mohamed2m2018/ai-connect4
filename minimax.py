@@ -1,9 +1,10 @@
 def minimax(board, depth, alpha, beta, maximizingPlayer):
+
     if(depth == 0 or isTerminal(board)):
         return utility(board)
 
     if maximizingPlayer:
-        value: -1000000
+        value = -1000000
         # children function to be implemented
         for child in children(board):
             value = max(value, minimax(child, depth-1, alpha, beta, False))
@@ -26,9 +27,18 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         return value
 
 
-# children(board)=> 1- generate tree 2-store tree 3- return stored tree as list
+# children(board)=> 1- generate tree 2- store tree 3- return stored tree as list
 # utilty(board)
+
+
 # isTerminal(board)
+# ColIsNotValid(col)
+
+
+
+
+
+
 
 def initializeBoard():
     board = [
