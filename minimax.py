@@ -14,7 +14,6 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             # cutoff
             if(alpha >= beta):
                 break
-                
 
         return value
     else:
@@ -35,11 +34,6 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 # ColIsNotValid(col)
 
 
-
-
-
-
-
 def initializeBoard():
     board = [
         [-1, -1, -1, -1, -1, -1, -1],
@@ -51,13 +45,34 @@ def initializeBoard():
     ]
     return board
 
-def children (board):
-    children=[]
 
+def children(board):
+    children = []
+    columnsDiscovered = [0, 0, 0, 0, 0, 0, 0]
+    # print(board[5])
+    for rowIndex in range(5, -1, -1):
+        for columnIndex in range(7):
+            if(columnsDiscovered[columnIndex]):
+                continue
+            childBoard = list(map(list, board))
+            row = childBoard[rowIndex]
+            if(row[columnIndex] == -1):
+                row[columnIndex] = 7
+                columnsDiscovered[columnIndex] = 1
+                children.append(childBoard)
+    return children
+
+
+children([
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, 2, -1, -1, -1]
+])
 
 
 # Initial call
-
 # minimax(initialBoard,depth,-1000000,1000000,true)
-
 # depth level of 6 seemed to be the optimal
