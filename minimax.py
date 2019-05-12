@@ -6,7 +6,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
     if maximizingPlayer:
         value = -1000000
         # children function to be implemented
-        for child in children(board):
+        for child in children(board, 0):
             value = max(value, minimax(child, depth-1, alpha, beta, False))
 
             alpha = max(alpha, value)
@@ -18,7 +18,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         return value
     else:
         value = 1000000
-        for child in children(board):
+        for child in children(board, 1):
             value = min(value, minimax(child, depth-1, alpha, beta, True))
             beta = min(beta, value)
             if(alpha >= beta):
@@ -46,7 +46,7 @@ def initializeBoard():
     return board
 
 
-def children(board):
+def children(board, coin):
     children = []
     columnsDiscovered = [0, 0, 0, 0, 0, 0, 0]
     # print(board[5])
@@ -57,11 +57,10 @@ def children(board):
             childBoard = list(map(list, board))
             row = childBoard[rowIndex]
             if(row[columnIndex] == -1):
-                row[columnIndex] = 7
+                row[columnIndex] = coin
                 columnsDiscovered[columnIndex] = 1
                 children.append(childBoard)
     return children
-
 
 # Initial call
 # minimax(initialBoard,depth,-1000000,1000000,true)
