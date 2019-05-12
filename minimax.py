@@ -63,16 +63,6 @@ def children(board):
     return children
 
 
-children([
-    [-1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, 2, -1, -1, -1]
-])
-
-
 # Initial call
 # minimax(initialBoard,depth,-1000000,1000000,true)
 # depth level of 6 seemed to be the optimal
