@@ -1,229 +1,70 @@
-width = 7
-
-
-
-
-def CheckHorizontal(board):
-    for RowNumber in range(len(board) - 1,-1,-1):
-        #print(row)
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        CountForHollow = 0
-        for e in board[RowNumber]:
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            elif e == -1:
-                CountForHollow = CountForHollow + 1
-
-
-
-
-
-        if CountPlayer1 >= 4:
-            return "player1 wins"
-
-
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
-
-        elif CountForHollow >= 4:
-            break
-
-
-def CheckVertical(board):
-    global width
-    for col in range(0,width):
-        #print("col = ",col)
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        for RowNumber in range(len(board) - 1, -1, -1):
-            e = board[RowNumber][col]
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            if e == -1:    # There is a hollow
-                break
-
-        if CountPlayer1 == 4:
-            return "player1 wins"
-
-        elif CountPlayer2 == 4:
-            return "player2 wins"
-
-
-def CheckLeftDiagonal(board):
-    global width
-    k = 3
-    for L in range(0,3):        # first loop ( iterating for 3 diagonals )
-        col = 0
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        for row in range(k,-1,-1):         # To iterate in one diagonal
-            e = board[row][col]
-
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            if e == -1:          # There is a hollow
-                break
-
-            col = col + 1
-
-        if CountPlayer1 >= 4:
-            return "player1 wins"
-
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
-
-        k = k + 1
-
-
-    k = 1
-    for L in range(0,3):         # second loop ( iterating for 3 diagonals )
-        row = 5
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        for col in range(k,width):      # To iterate in one diagonal
-            e = board[row][col]
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            elif e == -1:  # There is a hollow
-                break
-
-            row = row - 1
-
-        if CountPlayer1 >= 4:
-            return "player1 wins"
-
-        if CountPlayer2 >= 4:
-            return "player2 wins"
-
-        k = k + 1
-
-
-    board = [
-        [ 2 , 2 , 2 , 2 , 2 , 2 , 2 ],
-        [ 1 , 0 , 2 , 2 , 2 , 1 , 2 ],
-        [ 1 , 1 , 2 , 2 , 1 , 2 , 2 ],
-        [ 1 , 2 , 1 , 0 , 2 , 2 , 2 ],
-        [ 1 , 2 , 1 , 1 , 2 , 2 , 2 ],
-        [ 1 , 1 , 2 , 2 , 1 , 2 , 2 ]
-    ]
-def CheckRightDiagonal(board):
-    global width
-    k = 3
-    for L in range(0,3):        # first loop ( iterating for 3 diagonals )
-        row = 5
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        for col in range(k,-1,-1):         # To iterate in one diagonal
-            e = board[row][col]
-
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            if e == -1:          # There is a hollow
-                break
-
-            row = row - 1
-
-        if CountPlayer1 >= 4:
-            return "player1 wins"
-
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
-
-        k = k + 1
-
-    k = 5
-    for L in range(0, 3):  # second loop ( iterating for 3 diagonals )
-        col = 6
-        CountPlayer1 = 0
-        CountPlayer2 = 0
-        for row in range(k,-1 ,-1):  # To iterate in one diagonal
-            e = board[row][col]
-            if e == 1:
-                CountPlayer1 = CountPlayer1 + 1
-                CountPlayer2 = 0
-            elif e == 0:
-                CountPlayer2 = CountPlayer2 + 1
-                CountPlayer1 = 0
-            elif e == -1:  # There is a hollow
-                break
-
-            col = col - 1
-
-        if CountPlayer1 >= 4:
-            return "player1 wins"
-
-        if CountPlayer2 >= 4:
-            return "player2 wins"
-
-        k = k - 1
-
-
-
-def isTerminal(board):
-    ret = "None"
-    ret = CheckHorizontal(board)
-
-    if ret == "player1 wins":
-        return "player1 wins"
-    elif ret == "player2 wins":
-        return "player2 wins"
-
-    ret = CheckVertical(board)
-
-    if ret == "player1 wins":
-        return "player1 wins"
-    elif ret == "player2 wins":
-        return "player2 wins"
-
-    # we should check this from the fourth row
-    ret = CheckLeftDiagonal(board)
-
-    if ret == "player1 wins":
-        return "player1 wins"
-    elif ret == "player2 wins":
-        return "player2 wins"
-
-    ret = CheckRightDiagonal(board)
-
-    if ret == "player1 wins":
-        return "player1 wins"
-    elif ret == "player2 wins":
-        return "player2 wins"
-
-
-# def ColIsNotValid(col):
-
 def initializeBoard():
     board = [
-        [ -1 , -1 , -1 , -1 , -1 , -1  , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1  , 1 ],
-        [ -1 , -1 , -1 , -1 , -1 , 1  , -1 ],
-        [ -1 , -1 , -1 , -1 , 1 , -1  , -1 ],
-        [ -1 , -1 , 1 , 0, -1 , -1  , -1 ],
-        [ -1 , -1 , 1 , -1 , -1 , -1  , -1 ]
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1]
     ]
     return board
 
-board = initializeBoard()
-print(isTerminal(board))
+
+def minimax(board, depth, alpha, beta, maximizingPlayer):
+
+    if(depth == 0 or isTerminal(board)):
+        return utility(board)
+
+    if maximizingPlayer:
+        value = -1000000
+        # children function to be implemented
+        for child in children(board, 0):
+            value = max(value, minimax(child, depth-1, alpha, beta, False))
+
+            alpha = max(alpha, value)
+
+            # cutoff
+            if(alpha >= beta):
+                break
+
+        return value
+    else:
+        value = 1000000
+        for child in children(board, 1):
+            value = min(value, minimax(child, depth-1, alpha, beta, True))
+            beta = min(beta, value)
+            if(alpha >= beta):
+                break
+        return value
+
+
+# children(board)=> 1- generate tree 2- store tree 3- return stored tree as list
+# utilty(board)
+
+
+# isTerminal(board)
+# ColIsNotValid(col)
+
+
+
+
+
+def children(board, coin):
+    children = []
+    columnsDiscovered = [0, 0, 0, 0, 0, 0, 0]
+    # print(board[5])
+    for rowIndex in range(5, -1, -1):
+        for columnIndex in range(7):
+            if(columnsDiscovered[columnIndex]):
+                continue
+            childBoard = list(map(list, board))
+            row = childBoard[rowIndex]
+            if(row[columnIndex] == -1):
+                row[columnIndex] = coin
+                columnsDiscovered[columnIndex] = 1
+                children.append(childBoard)
+    return children
+
+# Initial call
+# minimax(initialBoard,depth,-1000000,1000000,true)
+# depth level of 6 seemed to be the optimal
