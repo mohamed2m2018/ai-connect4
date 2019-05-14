@@ -1,19 +1,11 @@
-def initializeBoard():
-    board = [
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1]
-    ]
-    return board
 
+from utility import utility 
+from isTerminal import isTerminal 
 
 def minimax(board, depth, alpha, beta, maximizingPlayer):
-
+    
     if(depth == 0 or isTerminal(board)):
-        return utility(board)
+        return utility(board,)
 
     if maximizingPlayer:
         value = -1000000
@@ -46,7 +38,16 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 # ColIsNotValid(col)
 
 
-
+def initializeBoard():
+    board = [
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1],
+        [-1, -1, -1, -1, -1, -1, -1]
+    ]
+    return board
 
 
 def children(board, coin):
