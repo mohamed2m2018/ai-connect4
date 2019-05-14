@@ -8,7 +8,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         output = utility(board,ret,True)
         # print("count = " , count ," is ",output)
         # count = count + 1
-        return 0,output
+        return 0, output
 
     if maximizingPlayer:
         value = -1000000
@@ -86,13 +86,13 @@ def initializeBoard():
         [E, E, E, E, E, E, E],
         [E, E, E, E, E, E, E],
         [E, E, E, E, E, E, E],
-        [E, E, E, E, A, E, E],
-        [A, H, E, E, A, E, E],
-        [A, H, E, A, A, E, E]
+        [A, E, E, E, E, E, E],
+        [A, H, E, H, A, H, E],
+        [A, H, E, H, A, H, E]
     ]
     return board
 
-depth = 5
+depth = 4
 initialBoard = initializeBoard()
 col,ret = minimax(initialBoard,depth,-1000000,1000000,True)
 print("Chosen col = ",col+1)
