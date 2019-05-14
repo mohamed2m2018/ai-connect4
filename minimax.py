@@ -1,49 +1,61 @@
+from utility import utility
+from IsTerminal import isTerminal
+count = 1
 def minimax(board, depth, alpha, beta, maximizingPlayer):
-
-    if(depth == 0 or isTerminal(board)):
-        return utility(board)
+    global count
+    ret = isTerminal(board)
+    if(depth == 0 or ret):
+        output = utility(board,ret,True)
+        # print("count = " , count ," is ",output)
+        # count = count + 1
+        return 0,output
 
     if maximizingPlayer:
         value = -1000000
+        col = 0
         # children function to be implemented
-        for child in children(board, 0):
-            value = max(value, minimax(child, depth-1, alpha, beta, False))
+        for child in children(board, 1):
+            columnIndex=child[0]
+            childBoard=child[1]
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False)
+
+            if outputFromMinMax > value:    # lw al fr3 dah maximum
+                value = outputFromMinMax   # save al value
+                col = columnIndex          # save al index
+
 
             alpha = max(alpha, value)
 
             # cutoff
             if(alpha >= beta):
+                # print("alpha cutoff")
                 break
 
-        return value
+
+
+        return col,value
     else:
         value = 1000000
-        for child in children(board, 1):
-            value = min(value, minimax(child, depth-1, alpha, beta, True))
+        col = 0
+        for child in children(board, 0):
+            columnIndex = child[0]
+            childBoard = child[1]
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True)
+
+            if outputFromMinMax < value:    # lw al fr3 dah minimum
+                value = outputFromMinMax   # save al value
+                col = columnIndex          # save al index
+
+
             beta = min(beta, value)
             if(alpha >= beta):
+                # print("beta cutoff")
                 break
-        return value
 
 
-# children(board)=> 1- generate tree 2- store tree 3- return stored tree as list
-# utilty(board)
 
 
-# isTerminal(board)
-# ColIsNotValid(col)
-
-
-def initializeBoard():
-    board = [
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1],
-        [-1, -1, -1, -1, -1, -1, -1]
-    ]
-    return board
+        return col,value
 
 
 def children(board, coin):
@@ -59,9 +71,35 @@ def children(board, coin):
             if(row[columnIndex] == -1):
                 row[columnIndex] = coin
                 columnsDiscovered[columnIndex] = 1
-                children.append(childBoard)
+                children.append([columnIndex,childBoard])
     return children
 
-# Initial call
-# minimax(initialBoard,depth,-1000000,1000000,true)
+
+
+
+
+def initializeBoard():
+    E = -1     # Empty
+    H = 0      # Human
+    A = 1      # AI
+    board = [
+        [E, E, E, E, E, E, E],
+        [E, E, E, E, E, E, E],
+        [E, E, E, E, E, E, E],
+        [E, E, E, E, A, E, E],
+        [A, H, E, E, A, E, E],
+        [A, H, E, A, A, E, E]
+    ]
+    return board
+
+depth = 5
+initialBoard = initializeBoard()
+col,ret = minimax(initialBoard,depth,-1000000,1000000,True)
+print("Chosen col = ",col+1)
+print("score =",ret)
 # depth level of 6 seemed to be the optimal
+
+# ai =>
+
+
+#children = [[0, board],[1,board],[],[]]
