@@ -9,32 +9,29 @@
 # 3-ai first player or not
 
 
-def utility(board, aiWon, firstPlayer):
+def utility(board, win, firstPlayer):
     score = 0
-    # Check if ai is the first player then its piece will be 1, else the default will be 0 (second player)
-    aiPiece = 0
-    playerPiece=1
-    if(firstPlayer):
-        aiPiece = 1
-        playerPiece=0
-
-    if aiWon == True:
+ 
+    if (win=="player1 wins" and !firstPlayer) or (win=="player2 wins" and firstPlayer) :
+        score= -1000000
+          
+    elif (win=="player2 wins" and !firstPlayer) or (win=="player1 wins" and firstPlayer) :
         score = 1000000
-        return score
-    if aiWon == False:
-        score = -1000000
-        return score
-
-    else:
+    else:    
+        # Check if ai is the first player then its piece will be 1, else the default will be 0 (second player)
+    
+        if(firstPlayer):
+            aiPiece = 1
+            playerPiece=0
+        else:
+            aiPiece = 0
+            playerPiece=1
+            
         score += checkCenter(board, aiPiece)
-
         score += checkWinChances(board, aiPiece)
-
         score -= checkWinChances(board,playerPiece)
-
-        print("Total score = ", score)
-        return score
-
+        print(score)
+    return score
 
 def checkCenter(board, aiPiece):
     score = 0
@@ -42,20 +39,14 @@ def checkCenter(board, aiPiece):
         if(board[row][3] == aiPiece):
             score += 2
 
-    print("checkCenter = ", score)
     return score
 
 
-def checkWinChances(board, aiPiece):
+def checkWinChances(board, piece):
     score = 0
-    score += checkAllHorizontalChances(board, aiPiece)
-    score += checkAllVerticalChances(board, aiPiece)
-    score += checkAllDiagonalChances(board, aiPiece)
-
-    if aiPiece == 1:
-        print("checkWinChances (Total_ai) = ", score)
-    else:
-        print("checkWinChances (Total_Human) = ", score)
+    score += checkAllHorizontalChances(board, piece)
+    score += checkAllVerticalChances(board, piece)
+    score += checkAllDiagonalChances(board, piece)
     return score
 
 
@@ -68,11 +59,17 @@ def checkAllHorizontalChances(board, aiPiece):
                     board[i][j:j+4], aiPiece, board[i+1][j:j+4])
             else:
                 score += checkFourConsecutivePieces(board[i][j:j+4], aiPiece)
-    if aiPiece == 1:
-        print("checkWinChances (Horizontal_ai) = ", score)
-    else:
-        print("checkWinChances (Horizontal_Human) = ", score)
+
     return score
+
+board = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, -1, 0, 0],
+        [0, 0, 0,-1, -1, 0, 0],
+        [0, 0, 1, -1, 0, 0, 0],
+        [0, 1, 0, 1, 1, 1, -1],
+        [1, 0, -1, 0, 0, 0, 0]
+]
 
 
 def checkAllVerticalChances(board, aiPiece):
@@ -85,10 +82,6 @@ def checkAllVerticalChances(board, aiPiece):
         for k in range(0, 3):
             score += checkFourConsecutivePieces(columnValues[k:k+4], aiPiece)
         columnValues = []
-    if aiPiece == 1:
-        print("checkWinChances (Vertical_ai) = ", score)
-    else:
-        print("checkWinChances (Vertical_Human) = ", score)
     return score
 
 
@@ -103,19 +96,15 @@ def checkAllDiagonalChances(board, aiPiece):
         for k in range(0, numberOfAlternatives):
             score += checkFourConsecutivePieces(element[k:k+4], aiPiece,)
 
-    if aiPiece == 1:
-        print("checkWinChances (Diagonal_ai) = ", score)
-    else:
-        print("checkWinChances (Diagonal_Human) = ", score)
     return score
 
 
 def checkFourConsecutivePieces(list, piece, secondList=None):
-    # print('I am first list', list)
+    print('I am first list', list)
     full = 0
     empty = 0
     if(secondList):
-        # print ('I am second list', secondList)
+        print ('I am second list', secondList)
         for index, element in enumerate(list):
             if element == piece:
                 full += 1
@@ -131,11 +120,11 @@ def checkFourConsecutivePieces(list, piece, secondList=None):
     # check if condition applied
 
     if(full == 2 and empty == 2):
-        # print('detected')
+        print('detected')
         return 4
 
     if(full == 3 and empty == 1):
-        # print('detected')
+        print('detected')
         return 5
 
     else:
@@ -167,6 +156,7 @@ def CheckLeftDiagonalForUtility(board):
             e = board[row][col]
             if row != 5:
                 if board[row+1][col] == -1:
+                    #flag that this is not a chance
                     e=-111
 
             list1.append(e)
@@ -217,13 +207,6 @@ def CheckRightDiagonalForUtility(board):
     return list2
 
 
-board = [
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        [ -1 , -1 , -1 , -1 , -1 , -1 , -1 ],
-        ]
-
+# checkAllHorizontalChances(board,1)
+# checkAllVerticalChances(board, 1)
 utility(board,-1,True)
