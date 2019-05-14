@@ -152,7 +152,7 @@ def CheckLeftDiagonalForUtility(board):
             e = board[row][col]
             if row != 5:
                 if board[row+1][col] == -1:
-                    break
+                    e=-111
             list1.append(e)
             col = col + 1
 
@@ -167,7 +167,7 @@ def CheckLeftDiagonalForUtility(board):
             e = board[row][col]
             if row != 5:
                 if board[row+1][col] == -1:
-                    break
+                    e=-111
 
             list1.append(e)
 
@@ -190,7 +190,7 @@ def CheckRightDiagonalForUtility(board):
             e = board[row][col]
             if row != 5:
                 if board[row+1][col] == -1:
-                    break
+                    e=-111
             list1.append(e)
             row = row - 1
 
@@ -206,7 +206,7 @@ def CheckRightDiagonalForUtility(board):
 
             if row != 5:
                 if board[row+1][col] == -1:
-                    break
+                    e=-111
             list1.append(e)
 
             col = col - 1
