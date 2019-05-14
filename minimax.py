@@ -11,8 +11,8 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         return 0, output
 
     if maximizingPlayer:
-        value = -1000000
-        col = 0
+        value = -1000009
+        # col = 0
         # children function to be implemented
         for child in children(board, 1):
             columnIndex=child[0]
@@ -35,8 +35,8 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 
         return col,value
     else:
-        value = 1000000
-        col = 0
+        value = 1000009
+        # col = 0
         for child in children(board, 0):
             columnIndex = child[0]
             childBoard = child[1]
