@@ -17,7 +17,7 @@
 #         [1, 0, 1, 0, 1, 0, 0]
 # ]
 
-def utility(board, win, firstPlayer):
+def utility(board, win, firstPlayer,difficulty):
     score = 0
  
     if (win=="player1 wins" and not(firstPlayer)) or (win=="player2 wins" and firstPlayer) :
@@ -25,6 +25,8 @@ def utility(board, win, firstPlayer):
           
     elif (win=="player2 wins" and not(firstPlayer)) or (win=="player1 wins" and firstPlayer) :
         score = 1000000
+
+
     else:    
         # Check if ai is the first player then its piece will be 1, else the default will be 0 (second player)
     
@@ -35,11 +37,13 @@ def utility(board, win, firstPlayer):
         else:
             aiPiece = 0
             playerPiece=1
-            
-        score += checkCenter(board, aiPiece)
-        score += checkWinChances(board, aiPiece)
-        score -= checkWinChances(board,playerPiece)
-        # print(score)
+
+        if difficulty == "Hard" or difficulty == "Medium":
+            score += checkCenter(board, aiPiece)
+
+        score += checkWinChances(board, aiPiece,difficulty)
+        score -= checkWinChances(board,playerPiece,difficulty)
+        #print(score)
     return score
 
 def checkCenter(board, aiPiece):
@@ -51,11 +55,24 @@ def checkCenter(board, aiPiece):
     return score
 
 
-def checkWinChances(board, piece):
+def checkWinChances(board, piece,difficulty):
     score = 0
-    score += checkAllHorizontalChances(board, piece)
-    score += checkAllVerticalChances(board, piece)
-    score += checkAllDiagonalChances(board, piece)
+    if difficulty == "Hard":
+        score += checkAllHorizontalChances(board, piece)
+        score += checkAllVerticalChances(board, piece)
+        score += checkAllDiagonalChances(board, piece)
+
+    elif difficulty == "Medium":
+        score += checkAllHorizontalChances(board, piece)
+        score += checkAllVerticalChances(board, piece)
+        score += checkAllDiagonalChances(board, piece)
+
+    elif difficulty == "Easy":
+        score += checkAllHorizontalChances(board, piece)
+        #score += checkAllVerticalChances(board, piece)
+        #score += checkAllDiagonalChances(board, piece)
+
+
     return score
 
 

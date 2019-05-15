@@ -12,13 +12,13 @@ from IsTerminal import isTerminal
                                                                                         #     return board
 
 count = 1
-def minimax(board, depth, alpha, beta, maximizingPlayer,AiIsFirstPlayer):
+def minimax(board, depth, alpha, beta, maximizingPlayer,AiIsFirstPlayer,difficulty):
     global count
     # if board == [[-1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1], [+1, -1, -1, -1, -1, -1, -1], [1, -1, -1, -1, -1, -1, -1], [1, 0, -1, 0, 1, 0, -1], [1, 0, -1, 0, 1, 0, -1]]:
     # print("HIIII")
     ret = isTerminal(board)
     if(depth == 0 or ret):
-        output = utility(board,ret,AiIsFirstPlayer)
+        output = utility(board,ret,AiIsFirstPlayer,difficulty)
         # print("count = " , count ," is ",output)
         # count = count + 1
         return 0, output
@@ -27,11 +27,11 @@ def minimax(board, depth, alpha, beta, maximizingPlayer,AiIsFirstPlayer):
         value = -1000008
         # col = 0
         # children function to be implemented
-        for child in children(board, 1):
+        for child in children(board, AiIsFirstPlayer):
             columnIndex=child["col"]
             childBoard=child["board"]
 
-            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False,AiIsFirstPlayer)
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False,AiIsFirstPlayer,difficulty)
 
             if outputFromMinMax > value:    # lw al fr3 dah maximum
                 value = outputFromMinMax   # save al value
@@ -51,10 +51,10 @@ def minimax(board, depth, alpha, beta, maximizingPlayer,AiIsFirstPlayer):
     else:
         value = 1000008
         # col = 0
-        for child in children(board, 0):
+        for child in children(board, not (AiIsFirstPlayer)):
             columnIndex = child["col"]
             childBoard = child["board"]
-            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True,AiIsFirstPlayer)
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True,AiIsFirstPlayer,difficulty)
 
             if outputFromMinMax < value:    # lw al fr3 dah minimum
                 value = outputFromMinMax   # save al value

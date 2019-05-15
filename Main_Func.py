@@ -1,12 +1,32 @@
 from minimax import *
 import numpy as np
 
+HumanIsFirstPlayer = int(input("Press 1 to play first or 0 to play second: "))
 
-depth = 5
+difficulty = input("Please Enter The Difficulty: Easy / Medium / Hard: ")
+
+if difficulty == "Hard":
+    depth = 5
+
+elif difficulty == "Medium":
+    depth = 1
+
+elif difficulty == "Easy":
+    depth = 1
+
+else:
+    print("Invalid Entery")
+    exit()
+
+
+
 board = initializeBoard()
 
+############################### depth = 5 ###############################
 
-HumanIsFirstPlayer = int(input("Press 1 to play first or 0 to play second: "))
+
+
+
 
 def addPieceToColumn(column,piece):
   global board
@@ -46,8 +66,9 @@ def human_Turn():
 
 def AI_Turn():
     global depth
+    global difficulty
     global HumanIsFirstPlayer
-    col, ret = minimax(board, depth, -1000000, 1000000, True,not(HumanIsFirstPlayer))
+    col, ret = minimax(board, depth, -1000000, 1000000, True,not(HumanIsFirstPlayer),difficulty)
     #print(col)
     return col
 
@@ -59,11 +80,14 @@ def AI_Turn():
 while(1):
     if(HumanIsFirstPlayer==1):
         col = human_Turn()
+        print("Human Move")
         addPieceToColumn(col,1)
         ret = isTerminal(board)
         if ret:
             print("Congratulations ^^ , You have won")
             break
+
+        print("AI Move")
         col = AI_Turn()
         addPieceToColumn(col,0)
         ret = isTerminal(board)
@@ -79,6 +103,7 @@ while(1):
         if ret:
             print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D ")
             break
+
         print("Human Move")
         col = human_Turn()
         addPieceToColumn(col,0)
