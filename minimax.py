@@ -12,13 +12,13 @@ from IsTerminal import isTerminal
                                                                                         #     return board
 
 count = 1
-def minimax(board, depth, alpha, beta, maximizingPlayer):
+def minimax(board, depth, alpha, beta, maximizingPlayer,AiIsFirstPlayer):
     global count
     # if board == [[-1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1], [+1, -1, -1, -1, -1, -1, -1], [1, -1, -1, -1, -1, -1, -1], [1, 0, -1, 0, 1, 0, -1], [1, 0, -1, 0, 1, 0, -1]]:
-    #     print("HIIII")
+    # print("HIIII")
     ret = isTerminal(board)
     if(depth == 0 or ret):
-        output = utility(board,ret,True)
+        output = utility(board,ret,AiIsFirstPlayer)
         # print("count = " , count ," is ",output)
         # count = count + 1
         return 0, output
@@ -31,7 +31,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             columnIndex=child["col"]
             childBoard=child["board"]
 
-            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False)
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False,AiIsFirstPlayer)
 
             if outputFromMinMax > value:    # lw al fr3 dah maximum
                 value = outputFromMinMax   # save al value
@@ -54,7 +54,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         for child in children(board, 0):
             columnIndex = child["col"]
             childBoard = child["board"]
-            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True)
+            _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True,AiIsFirstPlayer)
 
             if outputFromMinMax < value:    # lw al fr3 dah minimum
                 value = outputFromMinMax   # save al value
