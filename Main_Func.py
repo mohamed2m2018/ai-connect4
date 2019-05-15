@@ -3,7 +3,6 @@ import numpy as np
 
 
 depth = 2
-gameFinished=False
 board = initializeBoard()
 
 
@@ -50,20 +49,37 @@ def AI_Turn():
 
 
 
-while(not(gameFinished)):
+while(1):
     if(x==1):
         col = human_Turn()
-        addPieceToColumn(col,+1)
+        addPieceToColumn(col,1)
+        ret = isTerminal(board)
+        if ret:
+            print("Congratulations ^^ , You have won")
+            break
         col = AI_Turn()
         addPieceToColumn(col,0)
+        ret = isTerminal(board)
+        if ret:
+            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D ")
+            break
     elif(x==0):
         #print(x)
         col = AI_Turn()
         print("AI Move")
         addPieceToColumn(col, +1)
+        ret = isTerminal(board)
+        if ret:
+            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D ")
+            break
         print("Human Move")
         col = human_Turn()
         addPieceToColumn(col,0)
+        ret = isTerminal(board)
+        if ret:
+            print("Congratulations ^^ , You have won")
+            break
+
 
 
 

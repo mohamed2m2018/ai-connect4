@@ -125,7 +125,7 @@ def checkFourConsecutivePieces(list, piece, secondList=None):
 
     if(full == 2 and empty == 2):
         # print('detected')
-        return 4
+        return 10
 
     if(full == 3 and empty == 1):
         # print('detected')
