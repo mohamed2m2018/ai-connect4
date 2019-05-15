@@ -125,11 +125,11 @@ def checkFourConsecutivePieces(list, piece, secondList=None):
 
     if(full == 2 and empty == 2):
         # print('detected')
-        return 10
+        return 7
 
     if(full == 3 and empty == 1):
         # print('detected')
-        return 30
+        return 11
 
     else:
         return 0

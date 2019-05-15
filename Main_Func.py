@@ -2,7 +2,7 @@ from minimax import *
 import numpy as np
 
 
-depth = 2
+depth = 4
 board = initializeBoard()
 
 
@@ -22,9 +22,9 @@ def drawBoard(board):
     for row in range(5, -1, -1):
         for columnIndex in range(7):
             if(newBoard[row][columnIndex]==1):
-                newBoard[row][columnIndex]="★"
+                newBoard[row][columnIndex]="X"
             elif (newBoard[row][columnIndex] == 0):
-                newBoard[row][columnIndex] ="☆"
+                newBoard[row][columnIndex] ="O"
             else:
                 newBoard[row][columnIndex]="_"
 

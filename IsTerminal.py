@@ -19,19 +19,19 @@ def CheckHorizontal(board):
                 CountPlayer1 = 0
                 CountPlayer2 = 0
 
+            if CountPlayer1 >= 4:
+                return "player1 wins"
+            elif CountPlayer2 >= 4:
+                return "player2 wins"
+            elif CountForHollow >= 4:
+                break
 
 
 
 
-        if CountPlayer1 >= 4:
-            return "player1 wins"
 
 
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
 
-        elif CountForHollow >= 4:
-            break
 
 
 def CheckVertical(board):
@@ -75,15 +75,17 @@ def CheckLeftDiagonal(board):
                 CountPlayer2 = CountPlayer2 + 1
                 CountPlayer1 = 0
             if e == -1:          # There is a hollow
-                break
+                CountPlayer1 = 0
+                CountPlayer2 = 0
 
             col = col + 1
 
-        if CountPlayer1 >= 4:
-            return "player1 wins"
+            if CountPlayer1 >= 4:
+                return "player1 wins"
 
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
+            elif CountPlayer2 >= 4:
+                return "player2 wins"
+
 
         k = k + 1
 
@@ -102,15 +104,17 @@ def CheckLeftDiagonal(board):
                 CountPlayer2 = CountPlayer2 + 1
                 CountPlayer1 = 0
             elif e == -1:  # There is a hollow
-                break
+                CountPlayer1 = 0
+                CountPlayer2 = 0
 
             row = row - 1
 
-        if CountPlayer1 >= 4:
-            return "player1 wins"
+            if CountPlayer1 >= 4:
+                return "player1 wins"
 
-        if CountPlayer2 >= 4:
-            return "player2 wins"
+            elif CountPlayer2 >= 4:
+                return "player2 wins"
+
 
         k = k + 1
 
@@ -132,15 +136,18 @@ def CheckRightDiagonal(board):
                 CountPlayer2 = CountPlayer2 + 1
                 CountPlayer1 = 0
             if e == -1:          # There is a hollow
-                break
+                CountPlayer1 = 0
+                CountPlayer2 = 0
 
             row = row - 1
 
-        if CountPlayer1 >= 4:
-            return "player1 wins"
+            if CountPlayer1 >= 4:
+                return "player1 wins"
 
-        elif CountPlayer2 >= 4:
-            return "player2 wins"
+            elif CountPlayer2 >= 4:
+                return "player2 wins"
+
+
 
         k = k + 1
 
@@ -151,6 +158,7 @@ def CheckRightDiagonal(board):
         CountPlayer2 = 0
         for row in range(k,-1 ,-1):  # To iterate in one diagonal
             e = board[row][col]
+
             if e == 1:
                 CountPlayer1 = CountPlayer1 + 1
                 CountPlayer2 = 0
@@ -158,15 +166,18 @@ def CheckRightDiagonal(board):
                 CountPlayer2 = CountPlayer2 + 1
                 CountPlayer1 = 0
             elif e == -1:  # There is a hollow
-                break
+                CountPlayer1 = 0
+                CountPlayer2 = 0
+
 
             col = col - 1
 
-        if CountPlayer1 >= 4:
-            return "player1 wins"
+            if CountPlayer1 >= 4:
+                return "player1 wins"
 
-        if CountPlayer2 >= 4:
-            return "player2 wins"
+            elif CountPlayer2 >= 4:
+                return "player2 wins"
+
 
         k = k - 1
 
@@ -202,6 +213,7 @@ def isTerminal(board):
         return "player1 wins"
     elif ret == "player2 wins":
         return "player2 wins"
+
     else:
         return 0
 
@@ -210,12 +222,12 @@ def isTerminal(board):
 
 def initializeBoard():
     board = [
-        [ 5 , 4 , 3 , 31 , 32 , 33  , 34 ],
-        [ 6 , 5 , 4 , 3 , 2 , 1  , 35 ],
-        [ 7 , 6 , 5 , 4 , 3 , -1  , 36 ],
-        [ 1 , 7 , 6 , 5 , 4 , 3  , 20 ],
-        [ 1 , 1 , 7 , 6 , 5 , 4  , 30 ],
-        [ 1 , 1 , 1 , 70 , 60 , 50  , 40 ]
+        [ -1 , -1 , -1 , -1 , -1 , -1  , -1 ],
+        [ 1 , -1 , -1 , -1 , -1 , -1  , -1 ],
+        [ 0 , 1 , -1 , -1 , -1 , -1  , -1 ],
+        [ 1 , 1 , 1 , 0 , -1 , -1  , -1 ],
+        [ 0 , 1 , 0 , 1 , -1 , -1  , -1 ],
+        [ 0 , 0 , 0 , 1 , -1 , -1  , -1 ]
     ]
     return board
 
