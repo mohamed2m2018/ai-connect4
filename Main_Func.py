@@ -18,11 +18,49 @@ else:
     print("Invalid Entery")
     exit()
 
+def save():
+    global board
+    f = open("connect4.txt",'w')
+    f.write(str(drawBoardForText(board)))
+    exit()
+
+
+
+def load():
+    list = []
+    loading_board = []
+    f = open("connect4.txt",'r')
+    x = f.read()
+    #tsplit(x,('[',']',','))
+    #x = x.split()
+
+    x=x.replace('[','')
+    x=x.replace(']','')
+    x=x.replace(',','')
+    x=x.replace("'",'')
+    x=x.replace(' ','')
+
+    count = 0
+    for ch in x:
+        if count == 6:
+            list.append(ch)
+            loading_board.append(list)
+            list=[]
+            count = 0
+
+        else:
+            list.append(ch)
+            count = count + 1
+
+    #print(loading_board)
+    drawBoard(loading_board)
+
+
 
 
 board = initializeBoard()
 
-############################### depth = 5 ###############################
+##########################################################################
 
 
 
@@ -43,13 +81,31 @@ def addPieceToColumn(column,piece):
 
   drawBoard(board)
 
+
+
+def drawBoardForText(board):
+    newBoard=board.copy()
+    for row in range(5, -1, -1):
+        for columnIndex in range(7):
+            if(board[row][columnIndex]==1):
+                newBoard[row][columnIndex]="X"
+            elif (board[row][columnIndex] == 0):
+                newBoard[row][columnIndex] ="O"
+            else:
+                newBoard[row][columnIndex]="_"
+
+    return (newBoard)
+
+    print("###################################")
+
 def drawBoard(board):
+
     newBoard=list(map(list, board))
     for row in range(5, -1, -1):
         for columnIndex in range(7):
-            if(newBoard[row][columnIndex]==1):
+            if(newBoard[row][columnIndex]==1 or newBoard[row][columnIndex]=="X"):
                 newBoard[row][columnIndex]="X"
-            elif (newBoard[row][columnIndex] == 0):
+            elif (newBoard[row][columnIndex] == 0 or newBoard[row][columnIndex] =="O"):
                 newBoard[row][columnIndex] ="O"
             else:
                 newBoard[row][columnIndex]="_"
@@ -60,11 +116,23 @@ def drawBoard(board):
 
 
 def human_Turn():
+<<<<<<< HEAD
+    col = input("Enter the column You want to play in or s for saving game: ")
+    if col == "s":
+        save()
+
+    else:
+        col= int(col)
+        if col < 0 or col > 6 :
+            print("Invalid Index , Try again")
+            human_Turn()
+=======
     col = int(input("Enter the column You want to play in: "))
 
     if col < 0 or col > 6 :
         print("Invalid Index , Try again")
         human_Turn()
+>>>>>>> 35da64d9f2ab7ac4530d8f8bc254525dde5de380
 
     return col
 
@@ -79,10 +147,8 @@ def AI_Turn():
 
 
 
-
-
-
 while(1):
+
     if(HumanIsFirstPlayer==1):
         col = human_Turn()
         print("Human Move")
