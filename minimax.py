@@ -1,8 +1,21 @@
 from utility import utility
 from IsTerminal import isTerminal
+                                                                                        #
+                                                                                        # board = [
+                                                                                        #         [E, E, E, E, E, E, E],
+                                                                                        #         [E, E, E, E, E, E, E],
+                                                                                        #         [E, E, E, E, E, E, E],
+                                                                                        #         [A, E, E, E, E, E, E],
+                                                                                        #         [A, H, E, H, A, H, E],
+                                                                                        #         [A, H, E, H, A, H, E]
+                                                                                        #     ]
+                                                                                        #     return board
+
 count = 1
 def minimax(board, depth, alpha, beta, maximizingPlayer):
     global count
+    # if board == [[-1, -1, -1, -1, -1, -1, -1], [-1, -1, -1, -1, -1, -1, -1], [+1, -1, -1, -1, -1, -1, -1], [1, -1, -1, -1, -1, -1, -1], [1, 0, -1, 0, 1, 0, -1], [1, 0, -1, 0, 1, 0, -1]]:
+    #     print("HIIII")
     ret = isTerminal(board)
     if(depth == 0 or ret):
         output = utility(board,ret,True)
@@ -11,12 +24,13 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
         return 0, output
 
     if maximizingPlayer:
-        value = -1000009
+        value = -1000008
         # col = 0
         # children function to be implemented
         for child in children(board, 1):
-            columnIndex=child[0]
-            childBoard=child[1]
+            columnIndex=child["col"]
+            childBoard=child["board"]
+
             _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, False)
 
             if outputFromMinMax > value:    # lw al fr3 dah maximum
@@ -35,11 +49,11 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 
         return col,value
     else:
-        value = 1000009
+        value = 1000008
         # col = 0
         for child in children(board, 0):
-            columnIndex = child[0]
-            childBoard = child[1]
+            columnIndex = child["col"]
+            childBoard = child["board"]
             _,outputFromMinMax = minimax(childBoard, depth-1, alpha, beta, True)
 
             if outputFromMinMax < value:    # lw al fr3 dah minimum
@@ -71,10 +85,9 @@ def children(board, coin):
             if(row[columnIndex] == -1):
                 row[columnIndex] = coin
                 columnsDiscovered[columnIndex] = 1
-                children.append([columnIndex,childBoard])
+                children.append({"col":columnIndex, "board":childBoard})
+    children.sort(key=lambda k: k['col'])
     return children
-
-
 
 
 
@@ -86,20 +99,75 @@ def initializeBoard():
         [E, E, E, E, E, E, E],
         [E, E, E, E, E, E, E],
         [E, E, E, E, E, E, E],
-        [A, E, E, E, E, E, E],
-        [A, H, E, H, A, H, E],
-        [A, H, E, H, A, H, E]
+        [E, E, E, E, E, E, E],
+        [E, E, E, E, E, E, E],
+        [E, E, E, E, E, E, E]
     ]
     return board
-
-depth = 4
-initialBoard = initializeBoard()
-col,ret = minimax(initialBoard,depth,-1000000,1000000,True)
-print("Chosen col = ",col+1)
-print("score =",ret)
-# depth level of 6 seemed to be the optimal
-
-# ai =>
+#
+# depth = 2
+# initialBoard = initializeBoard()
+# col,ret = minimax(initialBoard,depth,-1000000,1000000,True)
+# print("Chosen col = ",col)
+# print("score =",ret)
+# # depth level of 6 seemed to be the optimal
 
 
-#children = [[0, board],[1,board],[],[]]
+
+ # Testing children #
+# initialBoard = initializeBoard()
+# chiiii = children(initialBoard,1)
+#
+# print(chiiii)
+
+
+# [[2, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, -1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, 1, 0, 1, 0, -1]]],
+#
+#  [6, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, -1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, 1]]],
+#
+#
+#  [1, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, 1, -1, -1, -1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, -1]]],
+#
+#
+#  [3, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, 1, -1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, -1]]],
+#
+#  [4, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, 1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, -1]]],
+#
+#  [5, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, -1, 1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, -1]]],
+#
+#  [0, [[-1, -1, -1, -1, -1, -1, -1],
+#       [-1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, -1, -1, -1],
+#       [1, -1, -1, -1, -1, -1, -1],
+#       [1, 0, -1, 0, 1, 0, -1],
+#       [1, 0, -1, 0, 1, 0, -1]]]]

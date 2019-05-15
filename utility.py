@@ -47,7 +47,7 @@ def checkCenter(board, aiPiece):
     for row in range(len(board)):
         if(board[row][3] == aiPiece):
             score += 2
-
+    #print("checkCenter= ",score)
     return score
 
 
@@ -69,6 +69,7 @@ def checkAllHorizontalChances(board, aiPiece):
             else:
                 score += checkFourConsecutivePieces(board[i][j:j+4], aiPiece)
 
+    #print("checkAllHorizontalChances= ",score)
     return score
 
 
@@ -82,6 +83,8 @@ def checkAllVerticalChances(board, aiPiece):
         for k in range(0, 3):
             score += checkFourConsecutivePieces(columnValues[k:k+4], aiPiece)
         columnValues = []
+
+    #print("checkAllVerticalChances= ",score)
     return score
 
 
@@ -96,6 +99,7 @@ def checkAllDiagonalChances(board, aiPiece):
         for k in range(0, numberOfAlternatives):
             score += checkFourConsecutivePieces(element[k:k+4], aiPiece,)
 
+    #print("checkAllDiagonalChances= ",score)
     return score
 
 
@@ -125,7 +129,7 @@ def checkFourConsecutivePieces(list, piece, secondList=None):
 
     if(full == 3 and empty == 1):
         # print('detected')
-        return 5
+        return 30
 
     else:
         return 0
