@@ -58,39 +58,39 @@ def checkCenter(board, aiPiece):
 def checkWinChances(board, piece,difficulty):
     score = 0
     if difficulty == "Hard":
-        score += checkAllHorizontalChances(board, piece)
-        score += checkAllVerticalChances(board, piece)
-        score += checkAllDiagonalChances(board, piece)
+        score += checkAllHorizontalChances(board, piece,"Hard")
+        score += checkAllVerticalChances(board, piece,"Hard")
+        score += checkAllDiagonalChances(board, piece,"Hard")
 
     elif difficulty == "Medium":
-        score += checkAllHorizontalChances(board, piece)
-        score += checkAllVerticalChances(board, piece)
-        score += checkAllDiagonalChances(board, piece)
+        score += checkAllHorizontalChances(board, piece,"Medium")
+        score += checkAllVerticalChances(board, piece,"Medium")
+        score += checkAllDiagonalChances(board, piece,"Medium")
 
     elif difficulty == "Easy":
-        score += checkAllHorizontalChances(board, piece)
-        #score += checkAllVerticalChances(board, piece)
-        #score += checkAllDiagonalChances(board, piece)
+        score += checkAllHorizontalChances(board, piece,"Easy")
+        #score += checkAllVerticalChances(board, piece,"Easy")
+        #score += checkAllDiagonalChances(board, piece,"Easy")
 
 
     return score
 
 
-def checkAllHorizontalChances(board, aiPiece):
+def checkAllHorizontalChances(board, aiPiece,difficulty):
     score = 0
     for i in range(len(board)):
         for j in range(0, 4):
             if i < 5:
                 score += checkFourConsecutivePieces(
-                    board[i][j:j+4], aiPiece, board[i+1][j:j+4])
+                    board[i][j:j+4], aiPiece,"Horizontal",difficulty, board[i+1][j:j+4])
             else:
-                score += checkFourConsecutivePieces(board[i][j:j+4], aiPiece)
+                score += checkFourConsecutivePieces(board[i][j:j+4], aiPiece,"Horizontal",difficulty)
 
     #print("checkAllHorizontalChances= ",score)
     return score
 
 
-def checkAllVerticalChances(board, aiPiece):
+def checkAllVerticalChances(board, aiPiece,difficulty):
     score = 0
     columnValues = []
     for j in range(0, 7):
@@ -98,14 +98,14 @@ def checkAllVerticalChances(board, aiPiece):
             columnValues.append(board[i][j])
 
         for k in range(0, 3):
-            score += checkFourConsecutivePieces(columnValues[k:k+4], aiPiece)
+            score += checkFourConsecutivePieces(columnValues[k:k+4], aiPiece,"Vertical",difficulty)
         columnValues = []
 
     #print("checkAllVerticalChances= ",score)
     return score
 
 
-def checkAllDiagonalChances(board, aiPiece):
+def checkAllDiagonalChances(board, aiPiece,difficulty):
     list = []
     list = (CheckLeftDiagonalForUtility(board))
     list = list+(CheckRightDiagonalForUtility(board))
@@ -114,13 +114,13 @@ def checkAllDiagonalChances(board, aiPiece):
         length = len(element)
         numberOfAlternatives = length-3
         for k in range(0, numberOfAlternatives):
-            score += checkFourConsecutivePieces(element[k:k+4], aiPiece,)
+            score += checkFourConsecutivePieces(element[k:k+4], aiPiece,"Diagonal",difficulty)
 
     #print("checkAllDiagonalChances= ",score)
     return score
 
 
-def checkFourConsecutivePieces(list, piece, secondList=None):
+def checkFourConsecutivePieces(list, piece, orientation,difficulty,secondList=None):
     # print('I am first list', list)
     full = 0
     empty = 0
@@ -142,11 +142,47 @@ def checkFourConsecutivePieces(list, piece, secondList=None):
 
     if(full == 2 and empty == 2):
         # print('detected')
-        return 7
+
+        # for Hard
+        if difficulty == "Hard":
+            return 7
+
+        # for Medium
+        elif difficulty == "Medium" and orientation == "Horizontal":
+            return 7
+        elif difficulty == "Medium" and orientation == "Vertical":
+            return 5
+        elif difficulty == "Medium" and orientation == "Diagonal":
+            return 1
+
+        # for Easy
+        elif difficulty == "Easy" and orientation == "Horizontal":
+            return 4
+
+
 
     if(full == 3 and empty == 1):
         # print('detected')
-        return 11
+
+        # for Hard
+        if difficulty == "Hard":
+            return 11
+
+        # for Medium
+        elif difficulty == "Medium" and orientation == "Horizontal":
+            return 11
+        elif difficulty == "Medium" and orientation == "Vertical":
+            return 9
+        elif difficulty == "Medium" and orientation == "Diagonal":
+            return 4
+
+        # for Easy
+        elif difficulty == "Easy" and orientation == "Horizontal":
+            return 9
+
+
+
+
 
     else:
         return 0

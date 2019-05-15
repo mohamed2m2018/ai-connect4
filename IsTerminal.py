@@ -23,7 +23,7 @@ def CheckHorizontal(board):
                 return "player1 wins"
             elif CountPlayer2 >= 4:
                 return "player2 wins"
-            elif CountForHollow >= 4:
+            elif CountForHollow >= 5:
                 break
 
 
