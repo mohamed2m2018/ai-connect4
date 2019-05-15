@@ -9,7 +9,7 @@ if difficulty == "Hard":
     depth = 5
 
 elif difficulty == "Medium":
-    depth = 1
+    depth = 2
 
 elif difficulty == "Easy":
     depth = 1
@@ -61,6 +61,11 @@ def drawBoard(board):
 
 def human_Turn():
     col = int(input("Enter the column You want to play in: "))
+
+    if col < 0 or col > 6 :
+        print("Invalid Index , Try again")
+        human_Turn()
+
     return col
 
 

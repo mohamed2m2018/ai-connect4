@@ -174,7 +174,7 @@ def checkFourConsecutivePieces(list, piece, orientation,difficulty,secondList=No
         elif difficulty == "Medium" and orientation == "Vertical":
             return 9
         elif difficulty == "Medium" and orientation == "Diagonal":
-            return 4
+            return 1
 
         # for Easy
         elif difficulty == "Easy" and orientation == "Horizontal":
