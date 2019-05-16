@@ -164,9 +164,6 @@ def human_Turn():
             human_Turn()
 
 
-    if col < 0 or col > 6 :
-        print("Invalid Index , Try again")
-        human_Turn()
 
     return col
 
@@ -189,7 +186,8 @@ while(1):
         addPieceToColumn(col,1)
         ret = isTerminal(board)
         if ret:
-            print("Congratulations ^^ , You have won")
+            print("Congratulations ^^ , You have won\n\n")
+            h = input("Press any key to continue . . . ")
             break
 
         print("AI Move")
@@ -197,7 +195,8 @@ while(1):
         addPieceToColumn(col,0)
         ret = isTerminal(board)
         if ret:
-            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D ")
+            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D\n\n ")
+            h = input("Press any key to continue . . . ")
             break
     elif(HumanIsFirstPlayer==0):
         #print(x)
@@ -206,7 +205,8 @@ while(1):
         addPieceToColumn(col, +1)
         ret = isTerminal(board)
         if ret:
-            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D ")
+            print("OOOOOOOOPPPPPSSS You Lose , our Ai Beats you \n hhhhhhhhhh Cry Now Mr Loser :D\n\n ")
+            h = input("Press any key to continue . . . ")
             break
 
         print("Human Move")
@@ -214,7 +214,8 @@ while(1):
         addPieceToColumn(col,0)
         ret = isTerminal(board)
         if ret:
-            print("Congratulations ^^ , You have won")
+            print("Congratulations ^^ , You have won\n\n")
+            h = input("Press any key to continue . . . ")
             break
 
 
