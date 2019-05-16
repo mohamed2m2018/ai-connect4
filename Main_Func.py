@@ -1,102 +1,6 @@
 from minimax import *
 import numpy as np
-
-HumanIsFirstPlayer = int(input("Press 1 to play first or 0 to play second: "))
-
-difficulty = input("Please Enter The Difficulty: Easy / Medium / Hard: ")
-
-if difficulty == "Hard":
-    depth = 5
-
-elif difficulty == "Medium":
-    depth = 2
-
-elif difficulty == "Easy":
-    depth = 1
-
-else:
-    print("Invalid Entery")
-    exit()
-
-def save():
-    global board
-    f = open("connect4.txt",'w')
-    f.write(str(drawBoardForText(board)))
-    exit()
-
-
-
-def load():
-    list = []
-    loading_board = []
-    f = open("connect4.txt",'r')
-    x = f.read()
-    #tsplit(x,('[',']',','))
-    #x = x.split()
-
-    x=x.replace('[','')
-    x=x.replace(']','')
-    x=x.replace(',','')
-    x=x.replace("'",'')
-    x=x.replace(' ','')
-
-    count = 0
-    for ch in x:
-        if count == 6:
-            list.append(ch)
-            loading_board.append(list)
-            list=[]
-            count = 0
-
-        else:
-            list.append(ch)
-            count = count + 1
-
-    #print(loading_board)
-    drawBoard(loading_board)
-
-
-
-
-board = initializeBoard()
-
-##########################################################################
-
-
-
-
-
-def addPieceToColumn(column,piece):
-  global board
-  flag = 0
-  for row in range(5,-1,-1):
-      if board[row][column] == -1:
-          board[row][column] = piece
-          flag = 1
-          break
-
-  if flag == 0:    # it means the col is completly full
-      new_col = int(input("Invalid Move, Try another column: "))
-      addPieceToColumn(new_col,piece)
-
-  drawBoard(board)
-
-
-
-def drawBoardForText(board):
-    newBoard=board.copy()
-    for row in range(5, -1, -1):
-        for columnIndex in range(7):
-            if(board[row][columnIndex]==1):
-                newBoard[row][columnIndex]="X"
-            elif (board[row][columnIndex] == 0):
-                newBoard[row][columnIndex] ="O"
-            else:
-                newBoard[row][columnIndex]="_"
-
-    return (newBoard)
-
-    print("###################################")
+HumanIsFirstPlayer = 1
 
 def drawBoard(board):
 
@@ -114,11 +18,143 @@ def drawBoard(board):
 
     print("###################################")
 
+def load():
+    global board
+    global HumanIsFirstPlayer
+    list = []
+    loading_board = []
+    f = open("connect4.txt",'r')
+    x = f.read()
+    #tsplit(x,('[',']',','))
+    #x = x.split()
+
+    x=x.replace('[','')
+    x=x.replace(']','')
+    x=x.replace(',','')
+    x=x.replace("'",'')
+    x=x.replace(' ','')
+
+    count = 0
+    flag = 0
+    for ch in x:
+        if flag == 0:
+            HumanIsFirstPlayer = int(ch)
+            flag = 1
+            continue
+
+        if count == 6:
+            if ch == "_":
+                list.append(-1)
+            elif ch == "X":
+                list.append(HumanIsFirstPlayer)
+            elif ch == "O":
+                list.append(not(HumanIsFirstPlayer))
+
+            loading_board.append(list)
+            list=[]
+            count = 0
+
+        else:
+            if ch == "_":
+                list.append(-1)
+            elif ch == "X":
+                list.append(HumanIsFirstPlayer)
+            elif ch == "O":
+                list.append(not (HumanIsFirstPlayer))
+
+            count = count + 1
+
+    #print(loading_board)
+    drawBoard(loading_board)
+    board = loading_board
+
+HumanIsFirstPlayer = input('''Press 1 to play first or 0 to play second,\nor you can press "L" for loading the previous game: ''')
+difficulty = input("Please Enter The Difficulty: Easy / Medium / Hard: ")
+
+if HumanIsFirstPlayer == "1" or HumanIsFirstPlayer == "0":
+    board = initializeBoard()
+    HumanIsFirstPlayer = int(HumanIsFirstPlayer)
+
+elif HumanIsFirstPlayer == "L":
+    load()
+    HumanIsFirstPlayer = 1
+
+else:
+    print("inavalid Entry")
+    print("Bye Bye ^^")
+    exit()
+
+
+
+if difficulty == "Hard":
+    depth = 5
+
+elif difficulty == "Medium":
+    depth = 2
+
+elif difficulty == "Easy":
+    depth = 1
+
+else:
+    print("Invalid Entery")
+    exit()
+
+def save():
+    global board
+    f = open("connect4.txt",'w')
+    f.write(str(HumanIsFirstPlayer))
+    f.write(str(drawBoardForText(board)))
+    exit()
+
+
+
+
+
+
+
+
+##########################################################################
+
+
+
+
+
+def addPieceToColumn(column,piece):
+  global board
+  flag = 0
+  for row in range(5,-1,-1):
+      if board[row][column] == -1 or board[row][column] == "_" :
+          board[row][column] = piece
+          flag = 1
+          break
+
+  if flag == 0:    # it means the col is completly full
+      new_col = int(input("Invalid Move, Try another column: "))
+      addPieceToColumn(new_col,piece)
+
+  drawBoard(board)
+
+def drawBoardForText(board):
+    newBoard=board.copy()
+    for row in range(5, -1, -1):
+        for columnIndex in range(7):
+            if(board[row][columnIndex]==1):
+                newBoard[row][columnIndex]="X"
+            elif (board[row][columnIndex] == 0):
+                newBoard[row][columnIndex] ="O"
+            else:
+                newBoard[row][columnIndex]="_"
+
+    return (newBoard)
+
+    print("###################################")
+
+
 
 def human_Turn():
-<<<<<<< HEAD
-    col = input("Enter the column You want to play in or s for saving game: ")
-    if col == "s":
+
+    col = input('''Enter the column You want to play in or "S" for saving game: ''')
+    if col == "S":
         save()
 
     else:
@@ -126,13 +162,11 @@ def human_Turn():
         if col < 0 or col > 6 :
             print("Invalid Index , Try again")
             human_Turn()
-=======
-    col = int(input("Enter the column You want to play in: "))
+
 
     if col < 0 or col > 6 :
         print("Invalid Index , Try again")
         human_Turn()
->>>>>>> 35da64d9f2ab7ac4530d8f8bc254525dde5de380
 
     return col
 
